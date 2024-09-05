@@ -18,16 +18,15 @@
       <div class="py-5 text-center">
         <h2>상품 수정 폼</h2>
       </div>
-      <form action="item.html" th:action method="post">
+
+      <form action="item.html" th:action th:object="${item}" method="post">
         <div>
           <label for="id">상품 ID</label>
           <input
             type="text"
             id="id"
-            name="id"
+            th:field="*{id}"
             class="form-control"
-            value="1"
-            th:value="${item.id}"
             readonly
           />
         </div>
@@ -36,10 +35,8 @@
           <input
             type="text"
             id="itemName"
-            name="itemName"
+            th:field="*{itemName}"
             class="formcontrol"
-            value="상품A"
-            th:value="${item.itemName}"
           />
         </div>
         <div>
@@ -47,9 +44,8 @@
           <input
             type="text"
             id="price"
-            name="price"
+            th:field="*{price}"
             class="form-control"
-            th:value="${item.price}"
           />
         </div>
         <div>
@@ -57,9 +53,8 @@
           <input
             type="text"
             id="quantity"
-            name="quantity"
+            th:field="*{quantity}"
             class="formcontrol"
-            th:value="${item.quantity}"
           />
         </div>
         <hr class="my-4" />

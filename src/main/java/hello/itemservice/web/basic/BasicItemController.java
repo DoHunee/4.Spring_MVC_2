@@ -34,7 +34,7 @@ class BasicItemController {
     }
 
     // 상품 상세 조회 폼
-    // http://localhost:8080/basic/items/1  => 이렇게 하면 상품 ID가 1인 상품을 조회한다.
+    // http://localhost:8080/basic/items/1 => 이렇게 하면 상품 ID가 1인 상품을 조회한다.
     @GetMapping("/{itemId}")
     public String item(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
@@ -45,14 +45,16 @@ class BasicItemController {
     // 상품 등록 폼
     // http://localhost:8080/basic/items/add
     @GetMapping("/add")
-    public String addForm() {
+    public String addForm(Model model) {
+        model.addAttribute("item", new Item());
         return "basic/addForm";
     }
 
     // 상품 등록 처리 1
     // http://localhost:8080/basic/items/add
     // @PostMapping("/add")
-    public String addItemV1(@RequestParam String itemName, @RequestParam int price, @RequestParam Integer quantity, Model model) {
+    public String addItemV1(@RequestParam String itemName, @RequestParam int price, @RequestParam Integer quantity,
+            Model model) {
         Item item = new Item();
         item.setItemName(itemName);
         item.setPrice(price);
@@ -67,7 +69,7 @@ class BasicItemController {
     // @PostMapping("/add")
     public String addItemV2(@ModelAttribute("item") Item item, Model model) {
         itemRepository.save(item);
-        //model.addAttribute("item", item); //자동 추가, 생략 가능
+        // model.addAttribute("item", item); //자동 추가, 생략 가능
         return "basic/item";
     }
 
@@ -108,8 +110,7 @@ class BasicItemController {
         redirectAttributes.addAttribute("status", true);
         return "redirect:/basic/items/{itemId}";
     }
-    
-    
+
     // 상품 수정 폼
     // http://localhost:8080/basic/items/1/edit
     @GetMapping("/{itemId}/edit")
@@ -119,7 +120,7 @@ class BasicItemController {
         return "basic/editForm";
     }
 
-    //  상품 수정 처리 
+    // 상품 수정 처리
     @PostMapping("/{itemId}/edit")
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
