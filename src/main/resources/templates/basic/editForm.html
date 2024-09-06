@@ -30,6 +30,7 @@
             readonly
           />
         </div>
+
         <div>
           <label for="itemName">상품명</label>
           <input
@@ -39,6 +40,7 @@
             class="formcontrol"
           />
         </div>
+
         <div>
           <label for="price">가격</label>
           <input
@@ -48,6 +50,7 @@
             class="form-control"
           />
         </div>
+
         <div>
           <label for="quantity">수량</label>
           <input
@@ -58,6 +61,42 @@
           />
         </div>
         <hr class="my-4" />
+
+        <!-- 타임리프 single checkbox -->
+        <div class="form-check">
+          <input
+            type="checkbox"
+            id="open"
+            class="form-check-input"
+            name="open"
+            value="true"
+            checked="checked"
+          />
+          <label for="open" class="form-check-label">판매 오픈</label>
+        </div>
+
+        <!-- 타임리프 multi checkbox -->
+        <div>
+          <div>등록 지역</div>
+          <div
+            th:each="region : ${regions}"
+            class="form-check form-check-inline"
+          >
+            <input
+              type="checkbox"
+              th:field="*{regions}"
+              th:value="${region.key}"
+              class="form-check-input"
+            />
+            <label
+              th:for="${#ids.prev('regions')}"
+              th:text="${region.value}"
+              class="form-check-label"
+              >서울</label
+            >
+          </div>
+        </div>
+
         <div class="row">
           <div class="col">
             <button class="w-100 btn btn-primary btn-lg" type="submit">
