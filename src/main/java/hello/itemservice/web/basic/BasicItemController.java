@@ -1,5 +1,6 @@
 package hello.itemservice.web.basic;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hello.itemservice.domain.item.DeliveryCode;
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
 import hello.itemservice.domain.item.ItemType;
@@ -112,7 +114,7 @@ class BasicItemController {
     public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
 
         log.info("item.open={}", item.getOpen()); // 판매 여부
-        log.info("item.regions={}", item.getRegions()); //등록 지역
+        log.info("item.regions={}", item.getRegions()); // 등록 지역
         log.info("item.itemType={}", item.getItemType()); // 상품 종류
 
         Item savedItem = itemRepository.save(item);
@@ -136,6 +138,16 @@ class BasicItemController {
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
         return "redirect:/basic/items/{itemId}";
+    }
+
+    // 테스트용 데이터 추가
+    @ModelAttribute("deliveryCodes")
+    public List<DeliveryCode> deliveryCodes() {
+        List<DeliveryCode> deliveryCodes = new ArrayList<>();
+        deliveryCodes.add(new DeliveryCode("FAST", "빠른 배송"));
+        deliveryCodes.add(new DeliveryCode("NORMAL", "일반 배송"));
+        deliveryCodes.add(new DeliveryCode("SLOW", "느린 배송"));
+        return deliveryCodes;
     }
 
     @ModelAttribute("itemTypes")
