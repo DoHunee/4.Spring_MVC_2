@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
+import hello.itemservice.domain.item.ItemType;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,15 +110,15 @@ class BasicItemController {
     // 저장완료 뜨게!
     @PostMapping("/add")
     public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
-        
-        log.info("item.open={}", item.getOpen());
-        log.info("item.regions={}", item.getRegions());
-        
-        
+
+        log.info("item.open={}", item.getOpen()); // 판매 여부
+        log.info("item.regions={}", item.getRegions()); //등록 지역
+        log.info("item.itemType={}", item.getItemType()); // 상품 종류
+
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
-        
+
         return "redirect:/basic/items/{itemId}";
     }
 
@@ -135,6 +136,11 @@ class BasicItemController {
     public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
         itemRepository.update(itemId, item);
         return "redirect:/basic/items/{itemId}";
+    }
+
+    @ModelAttribute("itemTypes")
+    public ItemType[] itemTypes() {
+        return ItemType.values();
     }
 
     // 테스트용 데이터 추가
