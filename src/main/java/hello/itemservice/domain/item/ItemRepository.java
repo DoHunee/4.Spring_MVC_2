@@ -53,11 +53,15 @@ public class ItemRepository {
      * @param updateParam 업데이트할 정보가 담긴 객체
      */
     public void update(Long itemId, Item updateParam) {
-        Item findItem = findById(itemId); // ID로 아이템을 찾음
-        findItem.setItemName(updateParam.getItemName()); // 아이템 이름 업데이트
-        findItem.setPrice(updateParam.getPrice()); // 가격 업데이트
-        findItem.setQuantity(updateParam.getQuantity()); // 수량 업데이트
-    }
+        Item findItem = findById(itemId);
+        findItem.setItemName(updateParam.getItemName());
+        findItem.setPrice(updateParam.getPrice());
+        findItem.setQuantity(updateParam.getQuantity());
+        findItem.setOpen(updateParam.getOpen());
+        findItem.setRegions(updateParam.getRegions());
+        findItem.setItemType(updateParam.getItemType());
+        findItem.setDeliveryCode(updateParam.getDeliveryCode());
+       }
 
     /**
      * 저장소를 초기화합니다. 모든 아이템을 삭제합니다.
